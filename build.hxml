@@ -1,0 +1,8 @@
+## = Tag-Cloud-hx Compiling Parameters =
+## see “{{{haxe --help}}}” for the meaning of each parameter
+-cp src
+-cp src/lib
+-main TagCloud
+-swf tag_v0.1.swf
+-swf-version 9
+-swf-header 1280:720:40:FFFFFF

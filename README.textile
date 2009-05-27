@@ -1,0 +1,49 @@
+h1. TagCloud-hx
+
+The open source library for creating Flash-based tag-clouds for the web.
+
+h2. About TagCloud-hx
+
+TagCloud-hx is a package containing a set of haXe classes to help the 
+creation of dynamic Tag Clouds based on frequency of keywords on a given 
+data.
+
+TagCloud-hx can be used by haXe, Flash, Flex and other AS3-compliant 
+Applications as an external library, it is fully open and customizable.
+
+h3. Features
+
+Here are some of what TagCloud-hx has to offer:
+
+ * Fast and Lightwheig dynamic tag-clouds generation
+ * Generate clouds from dynamic loaded JSON input or flashvars parameters
+ * Ability to set shapes as boundaries for the cloud – generate tag clouds
+ in a specific format.
+ * Flash9 player compatible
+
+Check the demos folder for some usage exampes.
+
+h2. Installation/Usage
+
+TBD
+
+h2. Copyright & License
+
+The Initial Developer of the Original Code is JWT Brasil, HSBC Brasil 
+and HSBC México.
+
+Portions created by the Initial Developer are Copyright (C) 2009
+the Initial Developer. All Rights Reserved.
+
+The main code for TagCloud-tx is licensed under a three clauses
+"BSD License":http://www.opensource.org/licenses/bsd-license.php and was
+originally commissioned by and developed for "HSBC Brasil":http://www.hsbc.com.br 
+and "HSBC México":http://www.hsbc.com.mx via the "JWT Brasil":http://www.jwt.com.br 
+advertising agency.
+
+See the LICENSE file for the legal terms of the license and the AUTHORS 
+file for a complete list of the contributors.
+
+h3. Open Source Libraries used
+
+TBD
