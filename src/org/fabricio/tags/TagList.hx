@@ -13,7 +13,7 @@ class TagList {
   
   // == Methods ==
   
-  // === loadDataURL(url:String, fmt:ListFormat):Bool ===
+  // === loadDataURL(url:String, ?fmt:ListFormat):Bool ===
   // Reset the tag list if not empty, and load the list data from 
   // **{{{url}}}**, returns {{{false}}} if the URL is invalid.
   // The format parameter **{{{fmt}}}** is optional and defaults to {{{ListFormat.json}}}.
@@ -42,8 +42,8 @@ class TagList {
   private function JSONLoadComplete(evt:Event):Void{
     trace("completeHandler");
     var json_ob = new JSONDecoder(_loader.data, true).getValue();
-    _frequency_table = json_ob.tags;
-    trace("_frequency_table.Felicidade " + _frequency_table.Felicidade);
+    _frequency_table = json_ob;
+    trace("_frequency_table.actionscript " + _frequency_table.actionscript);
   }
 
   // === loadRSSDataURL(url:String):Bool ===
@@ -70,10 +70,15 @@ class TagList {
   // Makes a request to **{{{url}}}** and add **{{{listeners}}}** to it.\\
   // Returns {{{false}}} if the URL is invalid.
   private function requestURL(url:String, listeners:Array<EventBind>):Bool{
-    _loader.close();
+    //try to terminate the loading just in case there is some going on
+    try{
+      _loader.close();
+    } catch (e:Error){
+      // will throw an error if it is loadign for the first time, so do nothing
+    }
     _request.url = url;
-    for(i in Reflect.fields(listeners)){
-      _loader.addEventListener(i, Reflect.field(listeners,i));
+    for(i in 0...listeners.length){
+      _loader.addEventListener(listeners[i].event, listeners[i].listener);
     }
     try {
       _loader.load(_request);

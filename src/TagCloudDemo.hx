@@ -6,5 +6,6 @@ class TagCloudDemo{
   
   static function main(){
     var list = new TagList();
+    list.loadDataURL("http://feeds.delicious.com/v2/json/tags/fabricio?count=50");
   }
 }

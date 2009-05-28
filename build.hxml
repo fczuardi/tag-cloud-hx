@@ -3,6 +3,6 @@
 -cp src
 -cp src/lib
 -main TagCloudDemo
--swf tag_cloud_demo.swf
+-swf demos/tag_cloud_demo.swf
 -swf-version 9
 -swf-header 1280:720:40:FFFFFF
