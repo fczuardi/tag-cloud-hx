@@ -328,7 +328,7 @@ App.navigate = function navigate() {
   }
 };
 
-App.CHARS_PER_ROW = 72;
+App.CHARS_PER_ROW = 80;
 
 App.initColumnSizes = function initSizes() {
   // Get the width of a single monospaced character of code.
