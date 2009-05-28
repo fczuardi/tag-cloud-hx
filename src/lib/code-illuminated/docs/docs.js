@@ -38,6 +38,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+// Zuardi hack
 function textile2Creole(textile_text){
   var creole_text = textile_text;
   var textileLinks = /"([^"]+)":([^:]+)(:\/\/)([^\s]+)/g;
@@ -88,9 +89,10 @@ function textile2Creole(textile_text){
   }
   return creole_text;
 } 
+//Zuardi hack
 var fczProcessor = function(doc, code, div){
   var filename = window.location.hash.slice(1);
-  if (filename.indexOf('.textile')!=-1){
+  if ((filename.indexOf('.textile')!=-1)||(filename.indexOf('.')==-1)){
     var creoleCode = textile2Creole(code);
     var creole = new Parse.Simple.Creole(
       {
@@ -109,6 +111,7 @@ var fczProcessor = function(doc, code, div){
       // div[0].innerHTML = '<pre>'+code +'<pre>';
   }
 }
+
 // = App =
 //
 // This is the application that processes the code and lets the user

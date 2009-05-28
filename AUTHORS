@@ -1,6 +1,11 @@
-# Names should be added to this file like so:
-# Name or Organization <email address>
+= TagCloud-hx: Authors and Contributors =
 
-HSBC Bank Brasil S.A.
-HSBC México S.A.
-JWT Brasil S.A.
+Names should be added to this file like so:
+{{{
+* Name or Organization <email address>
+}}}
+
+== Authors ==
+* HSBC Bank Brasil S.A.
+* HSBC México S.A.
+* JWT Brasil S.A.
