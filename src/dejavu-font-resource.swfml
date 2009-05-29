@@ -10,15 +10,6 @@ swfmill simple dejavu-font-resource.swfml dejavu-font-resource.swf
     <font name="DejaVuSansCondensedBold" import="lib/fonts/dejavu/ttf/DejaVuSansCondensed-Bold.ttf" 
     glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
 
-    <font name="DejaVuSansBold" import="lib/fonts/dejavu/ttf/DejaVuSans-Bold.ttf" 
-    glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
-
-    <font name="DejaVuSansBoldOblique" import="lib/fonts/dejavu/ttf/DejaVuSans-BoldOblique.ttf" 
-    glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
-
-    <font name="DejaVuSansExtraLight" import="lib/fonts/dejavu/ttf/DejaVuSans-ExtraLight.ttf" 
-    glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
-    
 <!-- Uncomment the Fonts you want to use -->
 <!--
 <font name="DejaVuSansBold" import="lib/fonts/dejavu/ttf/DejaVuSans-Bold.ttf" 
