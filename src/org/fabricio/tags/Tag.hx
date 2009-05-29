@@ -63,6 +63,10 @@ class Tag extends Sprite{
   // The identifier of the tag.
   public var tagName:String;
 
+  // === tagValue:Float ===
+  // A numeric value for the tag.
+  public var tagValue:Float;
+
   // === label:String ===
   // The displayed text of the tag.
   public var label(getLabel, setLabel):String;
@@ -146,13 +150,14 @@ class Tag extends Sprite{
   //     size  : 30, 
   //     color : 0x003333, 
   //     font  : "DejaVuSansCondensedBold",
-  //     name  : "haXe"
+  //     name  : "haXe",
+  //     value : 100
   //   });
   //   
   //   var tagB = new Tag('Rules', 30);
   // }}}
-  public function new(?text_or_config:Dynamic, ?size:Float, 
-                               ?color:Int, ?font:String, ?name:String){
+  public function new(?text_or_config:Dynamic, ?size:Float, ?color:Int, 
+                              ?font:String, ?name:String, ?value:Float){
     super();
     _label            = new TextField();
     _format           = new TextFormat();
@@ -169,6 +174,7 @@ class Tag extends Sprite{
       text = text_or_config;
     }
     tagName           = name;
+    tagValue          = value;
     _format.size      = (size == null)  ? DEFAULT_SIZE  : size;
     _format.color     = (color == null) ? DEFAULT_COLOR : color;
     this.font         = (font == null)  ? DEFAULT_FONT  : font;
