@@ -1,4 +1,4 @@
-#
+/*
 # TagCould-hx
 #
 # A library for creating tag-clouds in haXe.
@@ -34,7 +34,7 @@
 # THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+*/
 package org.fabricio.tags;
 
 import flash.text.Font;
@@ -109,14 +109,17 @@ class Tag extends Sprite{
     return _format.font;
   }
   
-  // === fontSize:Int ===
+  // === fontSize:Float ===
   // The font-size to be used in the tag.
-  public var fontSize(getFontSize,setFontSize):Int;
-  private function getFontSize():Int{
+  public var fontSize(getFontSize,setFontSize):Float;
+  private function getFontSize():Float{
     return _format.size;
   }
-  private function setFontSize(s:Int){
-    trace(s);
+  private function setFontSize(s:Float){
+    //if the tag does not have a value yet, use the size as value
+    if (Math.isNaN(tagValue)){
+      tagValue = s;
+    }
     _format.size = s;
     _label.setTextFormat(_format);
     return _format.size;
@@ -124,7 +127,7 @@ class Tag extends Sprite{
   
   // === fontColor:Int ===
   // The font-color to be used in the tag. Hexadecimal number — ex: {{{0x00FF00}}}.
-  public var fontColor(getFontSize,setFontSize):Int;
+  public var fontColor(getFontColor,setFontColor):Int;
   private function getFontColor():Int{
     return _format.color;
   }
@@ -142,6 +145,7 @@ class Tag extends Sprite{
   // * **{{{color}}}** – the hexadecimal color — ex: {{{0x00FF00}}}.
   // * **{{{font}}}**  – the name of the font to use.
   // * **{{{name}}}**  – the tagName to be used as an identifier.
+  // * **{{{value}}}** – the tagValue to attribute to the tag.
   //
   // Usage Examples:
   // {{{
@@ -173,10 +177,10 @@ class Tag extends Sprite{
     } else {
       text = text_or_config;
     }
-    tagName           = name;
-    tagValue          = value;
-    _format.size      = (size == null)  ? DEFAULT_SIZE  : size;
-    _format.color     = (color == null) ? DEFAULT_COLOR : color;
+    this.tagName      = name;
+    this.tagValue     = value;
+    this.fontColor    = (color == null) ? DEFAULT_COLOR : color;
+    this.fontSize     = (size == null)  ? DEFAULT_SIZE  : size;
     this.font         = (font == null)  ? DEFAULT_FONT  : font;
     this.label        = (text == null)  ? DEFAULT_TEXT  : text;
     this.addChild(_label);
