@@ -45,11 +45,21 @@ import flash.display.Sprite;
 // A visualization of a tags set as a cloud.
 class TagCloud extends Sprite{
   
-
+  // == Constants ==
+  // The default values for various settings
   private static inline var DEFAULT_CAPITALIZATION:Capitalization = preserve;
 
-  // == Settings ==
-  // Attributes and preferences for the cloud.
+  // == Properties ==
+  
+  // === capitalization:Capitalization ===
+  // The text transformation to be applied on the tags of the cloud.
+  //
+  // Options are:
+  // * {{{preserve}}}
+  // * {{{lower}}}
+  // * {{{upper}}}
+  // * {{{capitalized}}}
+   
   public var capitalization(getCaps, setCaps):Capitalization;
   private function getCaps():Capitalization{
     return _config.capitalization;
@@ -61,7 +71,6 @@ class TagCloud extends Sprite{
     }
     return _config.capitalization;
   }
-  
   private function applyCapitalization(s:String):String{
     switch (_config.capitalization){
       case preserve:
@@ -74,10 +83,26 @@ class TagCloud extends Sprite{
         return Lambda.list(s.split(' ')).map(capitalize).join(' ');
     }
   }
-  
   private function capitalize(s:String):String { 
     return  s.charAt(0).toUpperCase() + s.toLowerCase().substr(1,s.length);
   }
+  
+  // == Constructor ==
+  // Acceps the following optional parameters:
+  // * **{{{list}}}** a [[#src/org/fabricio/tags/TagList.hx | Taglist]] object.
+  public function new(?list:TagList){
+    super();
+    _tags = [];
+    _config = {
+      capitalization : DEFAULT_CAPITALIZATION
+    }
+    _tagList = (list == null) ? new TagList() : list;
+    if (list != null) {
+      create();
+    }
+  }
+
+  // == Private Helpers ==
   
   // generate all the tag objects of the cloud
   private function create():Void{
@@ -107,26 +132,17 @@ class TagCloud extends Sprite{
     }
   }
   
-  // == Constructor ==
-  // Acceps the following optional parameters:
-  // * **{{{list}}}** a [[#src/org/fabricio/tags/TagList.hx | Taglist]] object.
-  public function new(?list:TagList){
-    super();
-    _tags = [];
-    _config = {
-      capitalization : DEFAULT_CAPITALIZATION
-    }
-    _tagList = (list == null) ? new TagList() : list;
-    if (list != null) {
-      create();
-    }
-  }
-  
+  // == Private Vars
   private var _tagList:TagList;
   private var _tags:Array<Tag>;
   private var _config:TagCloudConfig;
-}
+  
+} // end of the class
 
+// == Custom data types ==
+
+// === Capitalization ===
+// The available choices for text capitalization.
 enum Capitalization{
   preserve;
   lower;
@@ -134,8 +150,8 @@ enum Capitalization{
   capitalized;
 }
 
+// === TagCloudConfig ===
+// An Object containing cloud-specific configuration.
 typedef TagCloudConfig = {
   var capitalization:Capitalization;
 }
-
-

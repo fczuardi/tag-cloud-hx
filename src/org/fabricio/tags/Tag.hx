@@ -179,4 +179,5 @@ class Tag extends Sprite{
   // == Private Vars ==
   private var _label:TextField;
   private var _format:TextFormat;
-}
+  
+} // end of the class
