@@ -1,6 +1,6 @@
 h1. TagCloud-hx
 
-An open source library for creating Flash-based tag-clouds on the web.
+A library for creating tag-clouds in haXe.
 
 h2. About TagCloud-hx
 
