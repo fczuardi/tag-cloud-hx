@@ -2,7 +2,12 @@
 ## see “{{{haxe --help}}}” for the meaning of each parameter
 -cp src
 -cp src/lib
--main TagCloudDemo
--swf demos/tag_cloud_demo.swf
 -swf-version 9
 -swf-header 1280:720:40:FFFFFF
+-swf-lib src/dejavu-font-resource.swf
+# uncomment the demo you want to generate
+
+## = TagCloudDemo =
+## basic tag cloud generated from a del.icio.us tags json feed
+-main TagCloudDemo
+-swf demos/tag_cloud_demo.swf

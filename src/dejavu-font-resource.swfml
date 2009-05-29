@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+To generate the swf lib use:
+swfmill simple dejavu-font-resource.swfml dejavu-font-resource.swf
+-->
+<movie version="9">
+  <frame>
+    <library>
+
+    <font name="DejaVuSansCondensedBold" import="lib/fonts/dejavu/ttf/DejaVuSansCondensed-Bold.ttf" 
+    glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+    <font name="DejaVuSansBold" import="lib/fonts/dejavu/ttf/DejaVuSans-Bold.ttf" 
+    glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+    <font name="DejaVuSansBoldOblique" import="lib/fonts/dejavu/ttf/DejaVuSans-BoldOblique.ttf" 
+    glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+    <font name="DejaVuSansExtraLight" import="lib/fonts/dejavu/ttf/DejaVuSans-ExtraLight.ttf" 
+    glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+    
+<!-- Uncomment the Fonts you want to use -->
+<!--
+<font name="DejaVuSansBold" import="lib/fonts/dejavu/ttf/DejaVuSans-Bold.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSansBoldOblique" import="lib/fonts/dejavu/ttf/DejaVuSans-BoldOblique.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSansExtraLight" import="lib/fonts/dejavu/ttf/DejaVuSans-ExtraLight.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSansOblique" import="lib/fonts/dejavu/ttf/DejaVuSans-Oblique.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSans" import="lib/fonts/dejavu/ttf/DejaVuSans.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSansCondensedBold" import="lib/fonts/dejavu/ttf/DejaVuSansCondensed-Bold.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSansCondensedBoldOblique" import="lib/fonts/dejavu/ttf/DejaVuSansCondensed-BoldOblique.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSansCondensedOblique" import="lib/fonts/dejavu/ttf/DejaVuSansCondensed-Oblique.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSansCondensed" import="lib/fonts/dejavu/ttf/DejaVuSansCondensed.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSansMonoBold" import="lib/fonts/dejavu/ttf/DejaVuSansMono-Bold.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSansMonoBoldOblique" import="lib/fonts/dejavu/ttf/DejaVuSansMono-BoldOblique.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSansMonoOblique" import="lib/fonts/dejavu/ttf/DejaVuSansMono-Oblique.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSansMono" import="lib/fonts/dejavu/ttf/DejaVuSansMono.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSerifBold" import="lib/fonts/dejavu/ttf/DejaVuSerif-Bold.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSerifBoldItalic" import="lib/fonts/dejavu/ttf/DejaVuSerif-BoldItalic.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSerifItalic" import="lib/fonts/dejavu/ttf/DejaVuSerif-Italic.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSerif" import="lib/fonts/dejavu/ttf/DejaVuSerif.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSerifCondensedBold" import="lib/fonts/dejavu/ttf/DejaVuSerifCondensed-Bold.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSerifCondensedBoldItalic" import="lib/fonts/dejavu/ttf/DejaVuSerifCondensed-BoldItalic.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSerifCondensedItalic" import="lib/fonts/dejavu/ttf/DejaVuSerifCondensed-Italic.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+<font name="DejaVuSerifCondensed" import="lib/fonts/dejavu/ttf/DejaVuSerifCondensed.ttf" 
+glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+
+-->
+    </library>
+  </frame>
+</movie>
