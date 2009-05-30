@@ -56,6 +56,7 @@ class Tag extends Sprite{
   private static inline var DEFAULT_COLOR:Int       = 0x333333;
   private static inline var DEFAULT_FONT:String     = "_sans";
   private static inline var DEFAULT_EMBED_FONT:Bool = false;
+  private static inline var DEFAULT_SELECTABLE:Bool = false;
   
   // == Properties ==
   
@@ -167,6 +168,7 @@ class Tag extends Sprite{
     _format           = new TextFormat();
     _label.autoSize   = TextFieldAutoSize.LEFT;
     _label.embedFonts = DEFAULT_EMBED_FONT;
+    _label.selectable = DEFAULT_SELECTABLE;
     var text:String   = null;
     if (Reflect.isObject(text_or_config)){
       text  = Reflect.field(text_or_config, 'text');

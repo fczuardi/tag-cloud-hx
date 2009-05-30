@@ -31,10 +31,16 @@ class TagCloudDemo extends Sprite{
       var tagcloud = new TagCloud(listA);
       tagcloud.x = 100;
       tagcloud.y = 200;
+      tagcloud.create();
       _root.addChild(tagcloud);
     }
     var onDeliciousFeedLoaded = function (evt:Event):Void{
       trace('Remote Data Sucessfully Loaded');
+      var tagcloud = new TagCloud(listB);
+      tagcloud.x = 600;
+      tagcloud.y = 200;
+      tagcloud.create();
+      _root.addChild(tagcloud);
     }
     listA.addEventListener(Event.COMPLETE, onLocalFileLoaded);
     listB.addEventListener(Event.COMPLETE, onDeliciousFeedLoaded);

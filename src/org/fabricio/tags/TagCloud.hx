@@ -45,9 +45,13 @@ import flash.display.Sprite;
 // A visualization of a tags set as a cloud.
 class TagCloud extends Sprite{
   
-  // == Constants ==
+  // == Defaults ==
   // The default values for various settings
-  private static inline var DEFAULT_CAPITALIZATION:Capitalization = preserve;
+  static inline var DEFAULT_CAPITALIZATION:Capitalization = capitalized;
+  static inline var DEFAULT_SIZE_FN:Float->Float    = function(v:Float):Float{ return  v * 2;}
+  static inline var DEFAULT_COLOR_FN:Float->Int     = function(v:Float):Int{ return 0x333333;}
+  static inline var DEFAULT_OPACITY_FN:Float->Float = function(v:Float):Float{ return 0.8;}
+  static inline var DEFAULT_FONT_FN:Float->String   = function(v:Float):String{ return "DejaVuSansCondensedBold";}
 
   // == Properties ==
   
@@ -55,24 +59,24 @@ class TagCloud extends Sprite{
   // The text transformation to be applied on the tags of the cloud.
   //
   // Options are:
-  // * {{{preserve}}}
-  // * {{{lower}}}
-  // * {{{upper}}}
-  // * {{{capitalized}}}
+  // * {{{preserve}}} — Don’t modify the text.
+  // * {{{lower}}} — Convert to lowercase.
+  // * {{{upper}}} — Convert to uppercase.
+  // * {{{capitalized}}} — Only the first letter of each word capitalized.
    
   public var capitalization(getCaps, setCaps):Capitalization;
   private function getCaps():Capitalization{
-    return _config.capitalization;
+    return _capitalization;
   }
   private function setCaps(cap:Capitalization){
-    _config.capitalization = cap;
+    _capitalization = cap;
     for (i in _tags){
       i.label = applyCapitalization(i.tagName);
     }
-    return _config.capitalization;
+    return _capitalization;
   }
   private function applyCapitalization(s:String):String{
-    switch (_config.capitalization){
+    switch (_capitalization){
       case preserve:
         return s;
       case lower:
@@ -87,55 +91,70 @@ class TagCloud extends Sprite{
     return  s.charAt(0).toUpperCase() + s.toLowerCase().substr(1,s.length);
   }
   
+  // === sizeFn ===
+  // A function to modify the size of each tag according to it’s value.
+  public var sizeFn:Float -> Float;
+
+  // === colorFn ===
+  // A function to modify the color of each tag according to it’s value.
+  public var colorFn:Float -> Int;
+  
+  // === opacityFn ===
+  // A function to modify the opacity of each tag according to it’s value.
+  public var opacityFn:Float -> Float;
+  
+  // === fontFn ===
+  // A function to modify the font of each tag according to it’s value.
+  public var fontFn:Float -> String;
+  
+  // == Methods ==
+  
+  // === create() ===
+  // Generates all the tag objects of the cloud.
+  public function create():Void{
+    var x:Float = 0;
+    var y:Float = 0;
+    for (i in _tagList){
+      var tag = new Tag({
+        text  : applyCapitalization(i.name), 
+        size  : sizeFn(i.value), 
+        color : colorFn(i.value), 
+        font  : fontFn(i.value),
+        name  : i.name
+      });
+      tag.alpha = opacityFn(i.value);
+      
+      tag.x = x;
+      tag.y = y - (tag.height)/2;
+      x += tag.width;
+      if(x>350){
+        x = 0;
+        y += 30;
+      }
+      _tags.push(tag);
+      addChild(tag);
+    }
+  }
+  
   // == Constructor ==
   // Acceps the following optional parameters:
   // * **{{{list}}}** a [[#src/org/fabricio/tags/TagList.hx | Taglist]] object.
   public function new(?list:TagList){
     super();
     _tags = [];
-    _config = {
-      capitalization : DEFAULT_CAPITALIZATION
-    }
     _tagList = (list == null) ? new TagList() : list;
-    if (list != null) {
-      create();
-    }
+    
+    this.capitalization = DEFAULT_CAPITALIZATION;
+    this.sizeFn         = DEFAULT_SIZE_FN;
+    this.colorFn        = DEFAULT_COLOR_FN;
+    this.opacityFn      = DEFAULT_OPACITY_FN;
+    this.fontFn         = DEFAULT_FONT_FN;
   }
 
-  // == Private Helpers ==
-  
-  // generate all the tag objects of the cloud
-  private function create():Void{
-    var x:Float = 0;
-    var y:Float = 0;
-    for (i in _tagList){
-      if(i.value>3){
-        var tag = new Tag({
-          text  : applyCapitalization(i.name), 
-          size  : i.value *1.2+4, 
-          color : 0x003333, 
-          font  : "DejaVuSansCondensedBold",
-          name  : i.name
-        });
-        tag.alpha = 0.8;
-        tag.x = x;
-        tag.y = y - (tag.height)/2;
-        _tags.push(tag);
-        addChild(tag);
-        x += tag.width;
-        if(x>350){
-          x = Math.random()*20;
-          y += 30;
-        }
-      }
-
-    }
-  }
-  
   // == Private Vars
   private var _tagList:TagList;
   private var _tags:Array<Tag>;
-  private var _config:TagCloudConfig;
+  private var _capitalization:Capitalization;
   
 } // end of the class
 
@@ -148,10 +167,4 @@ enum Capitalization{
   lower;
   upper;
   capitalized;
-}
-
-// === TagCloudConfig ===
-// An Object containing cloud-specific configuration.
-typedef TagCloudConfig = {
-  var capitalization:Capitalization;
 }
