@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+To generate the swf lib use:
+swfmill simple shapes.swfml shapes.swf
+-->
+<movie version="9" width="1000"
+   height="800">
+  <frame>
+    <library>
+      <clip id="antiRhino" import="anti-rhino.svg"/> 
+      <font name="DejaVuSansCondensedBold" import="lib/fonts/dejavu/ttf/DejaVuSansCondensed-Bold.ttf" 
+      glyphs="01234567890ABCDEFGHIJKLMNOPQRSTUVXWYZabcdefghijklmnopqrstuvxwyzáâãàéêíóôúõç"/>
+    </library>
+    <place id="antiRhino" name="antiRhino" depth="1"/>
+  </frame>
+</movie>

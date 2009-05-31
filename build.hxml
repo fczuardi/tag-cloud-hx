@@ -4,7 +4,7 @@
 -cp src/lib
 -swf-version 9
 -swf-header 1280:720:40:FFFFFF
--swf-lib src/dejavu-font-resource.swf
+-swf-lib src/library.swf
 # uncomment the demo you want to generate
 
 ## = TagCloudDemo =

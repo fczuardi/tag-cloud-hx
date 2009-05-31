@@ -38,6 +38,8 @@
 package org.fabricio.tags;
 
 import flash.display.Sprite;
+import flash.geom.Point;
+
 
 // ==== package org.fabricio.tags ====
 
@@ -47,10 +49,10 @@ class TagCloud extends Sprite{
   
   // == Defaults ==
   // The default values for various settings
-  static inline var DEFAULT_CAPITALIZATION:Capitalization = capitalized;
-  static inline var DEFAULT_SIZE_FN:Float->Float    = function(v:Float):Float{ return  v * 2;}
-  static inline var DEFAULT_COLOR_FN:Float->Int     = function(v:Float):Int{ return 0x333333;}
-  static inline var DEFAULT_OPACITY_FN:Float->Float = function(v:Float):Float{ return 0.8;}
+  static inline var DEFAULT_CAPITALIZATION:Capitalization = upper;
+  static inline var DEFAULT_SIZE_FN:Float->Float    = function(v:Float):Float{ return  15 + v * .02;}
+  static inline var DEFAULT_COLOR_FN:Float->Int     = function(v:Float):Int{ return 0x555555;}
+  static inline var DEFAULT_OPACITY_FN:Float->Float = function(v:Float):Float{ return .2+v/180;}
   static inline var DEFAULT_FONT_FN:Float->String   = function(v:Float):String{ return "DejaVuSansCondensedBold";}
 
   // == Properties ==
@@ -114,6 +116,7 @@ class TagCloud extends Sprite{
   public function create():Void{
     var x:Float = 0;
     var y:Float = 0;
+
     for (i in _tagList){
       var tag = new Tag({
         text  : applyCapitalization(i.name), 
@@ -123,16 +126,71 @@ class TagCloud extends Sprite{
         name  : i.name
       });
       tag.alpha = opacityFn(i.value);
-      
-      tag.x = x;
-      tag.y = y - (tag.height)/2;
-      x += tag.width;
-      if(x>350){
-        x = 0;
-        y += 30;
-      }
+      tag.y = Math.random()*10;
+      tag.x = Math.random()*10;
       _tags.push(tag);
-      addChild(tag);
+/*      tag.x = tag.y = 0;
+*/    }
+    t = 0;
+    tagCount = 0;
+    // for every frame, call the loop method
+   this.addEventListener(flash.events.Event.ENTER_FRAME,loop);    
+  }
+  
+  
+  /*
+  
+0 - create a helper to check the an aproximated percentage of the tag that is overlaping a given shape
+1- sort the tags by size, ascending
+2- get the shorter tag and go from the top-left corner to the right until more than x % is over the shape
+3- stop and check if the bigger one can have the same percentage
+   - repeat until find one that fits, going from the bigger 
+
+  */
+  private var t:Int;
+  private var tagCount:Int;
+  public var shape:Sprite;
+  private function loop(e:Dynamic){
+    if ((tagCount < _tags.length) && (t++ % 2 == 0) ){
+      _tags[tagCount].x = -100 + Math.random()*300;
+      _tags[tagCount].y = -20 +Math.random()*40;
+      addChild(_tags[tagCount++]);
+    }
+    for (i in _tags){
+      for(j in _tags){
+        if(i != j){
+          var dx:Float = (j.x+j.width/2) - (i.x+i.width/2);
+          var dy:Float = (j.y+j.height/2) - (i.y+i.height/2);
+          var d:Float = Math.sqrt(dx*dx +dy*dy);
+          var magnetRange = 30+j.height*.5;
+          var magnetPower = j.width;
+          magnetPower = 10;
+          if (d < magnetRange){
+            var angle = Math.atan2(dy, dx);
+            var inc = magnetPower * (1 - d/magnetRange);
+            var incX = inc * Math.cos(angle);
+            var incY = inc * Math.sin(angle);
+            var localpoint:Point = new Point(i.x-incX, i.y-incY);
+            var globalpoint:Point = this.localToGlobal(localpoint);
+            var cornersOverShape = 0;
+            for (c in 0...5){
+              for(l in 0...3){
+                if (shape.hitTestPoint(globalpoint.x+(c*1/4)*i.width, globalpoint.y+(l*1/2)*i.height, true)) cornersOverShape++;
+              }
+            }
+            if (cornersOverShape < 7){
+              i.x -= incX;
+              i.y -= incY;
+            }else if (cornersOverShape < 9){
+              i.x += incY/3;
+              i.y += incX/3;
+            }else{
+              i.x = -100 + Math.random()*300;
+              i.y = -20 +Math.random()*40;
+            }
+          }
+        }
+      }
     }
   }
   
