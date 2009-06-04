@@ -101,6 +101,33 @@ class TagList implements IEventDispatcher{
     dispatchEvent(evt);
   }
 
+  // == IEventDispatcher Implementation ==
+  private var _dispatcher:EventDispatcher;
+  public function dispatchEvent(e:Event):Bool{
+    return _dispatcher.dispatchEvent(e);
+  }
+  public function hasEventListener(t:String):Bool{
+    return _dispatcher.hasEventListener(t);
+  }
+  public function addEventListener(t:String, l:Dynamic->Void,
+                          ?u:Bool=false, ?p:Int=0, ?w:Bool=false):Void{
+    _dispatcher.addEventListener(t, l, u, p, w);
+  }
+  public function removeEventListener(t:String, 
+                                    l:Dynamic->Void, u:Bool=false):Void{
+    _dispatcher.removeEventListener(t, l, u);
+  }
+  public function willTrigger(t:String):Bool {
+    return _dispatcher.willTrigger(t);
+  }
+  
+  // == Constructor ==
+  public function new(){
+    _loader = new URLLoader();
+    _request = new URLRequest();
+    _dispatcher = new EventDispatcher(this);
+  }
+  
   // == Private Helpers ==
   
   // === requestURL(url:String, listeners:Array<EventBind>):Bool ===
@@ -126,26 +153,6 @@ class TagList implements IEventDispatcher{
     }
   }
   
-  // == IEventDispatcher Implementation ==
-  private var _dispatcher:EventDispatcher;
-  public function dispatchEvent(e:Event):Bool{
-    return _dispatcher.dispatchEvent(e);
-  }
-  public function hasEventListener(t:String):Bool{
-    return _dispatcher.hasEventListener(t);
-  }
-  public function addEventListener(t:String, l:Dynamic->Void,
-                          ?u:Bool=false, ?p:Int=0, ?w:Bool=false):Void{
-    _dispatcher.addEventListener(t, l, u, p, w);
-  }
-  public function removeEventListener(t:String, 
-                                    l:Dynamic->Void, u:Bool=false):Void{
-    _dispatcher.removeEventListener(t, l, u);
-  }
-  public function willTrigger(t:String):Bool {
-    return _dispatcher.willTrigger(t);
-  }
-  
   // == Private Vars ==
   
   // Internal variables used to get data from the web
@@ -157,13 +164,6 @@ class TagList implements IEventDispatcher{
 
   // The object containing tag names as keys and their values as values.
   private var _tagHashTable:Dynamic;
-  
-  // == Constructor ==
-  public function new(){
-    _loader = new URLLoader();
-    _request = new URLRequest();
-    _dispatcher = new EventDispatcher(this);
-  }
   
 } // end of the class
 

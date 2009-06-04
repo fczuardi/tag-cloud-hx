@@ -70,6 +70,8 @@ copyright notices:
 * "DejaVu Font v2.29":http://dejavu-fonts.org
 ** Bitstream Vera License + Arev Fonts License
 ** Copyright (c) 2006 by Tavmjong Bah. Copyright (c) 2003 by Bitstream, Inc.
+* "Rhino vector from the Safari and Zoo Animals Vector Pack":http://www.blog.spoongraphics.co.uk/freebies/free-vector-pack-safari-and-zoo-animals
+** "Chris Spooner":http://www.blog.spoongraphics.co.uk/
 * "code-illuminated":http://code.google.com/p/code-illuminated
 ** MPL 1.1/GPL 2.0/LGPL 2.1
 ** Copyright (C) 2007, Mozilla

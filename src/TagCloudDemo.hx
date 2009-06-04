@@ -1,6 +1,9 @@
 import org.fabricio.tags.Tag;
 import org.fabricio.tags.TagCloud;
 import org.fabricio.tags.TagList;
+import org.fabricio.tags.MagnetsBehavior;
+import org.fabricio.tags.AppearsGraduallyBehavior;
+import org.fabricio.tags.TextBlockBehavior;
 import flash.events.Event;
 import flash.display.Sprite;
 import flash.display.Stage;
@@ -33,27 +36,27 @@ class TagCloudDemo extends Sprite{
     // callbacks
     var onLocalFileLoaded = function (evt:Event):Void{
       trace('Local Data Sucessfully Loaded');
+      var tagcloud = new TagCloud(listA);
+      tagcloud.x = 350;
+      tagcloud.y = 30;
+      tagcloud.attachBehavior(new TextBlockBehavior(500, justify));
+      tagcloud.attachBehavior(new AppearsGraduallyBehavior(50, random));
+//      tagcloud.attachBehavior(new MagnetsBehavior());
+      _root.addChild(tagcloud);
     }
     var onDeliciousFeedLoaded = function (evt:Event):Void{
       trace('Remote Data Sucessfully Loaded');
-      var tagcloud = new TagCloud(listB);
-      tagcloud.x = 400;
-      tagcloud.y = 320;
-      tagcloud.shape = shape;
-      tagcloud.create();
-      _root.addChild(tagcloud);
     }
     listA.addEventListener(Event.COMPLETE, onLocalFileLoaded);
     listB.addEventListener(Event.COMPLETE, onDeliciousFeedLoaded);
     
-/*    trace('Load data from a local file');
-    listA.dataURL = localFile;
-    listA.loadDataURL();
+//    trace('Load data from the Internet');
+//    listB.loadDataURL(remoteFile);
+//    trace('loading '+listB.dataURL+'…');
+
+    trace('Load local Data');
+    listA.loadDataURL(localFile);
     trace('loading '+listA.dataURL+'…');
-*/    
-    trace('Load data from the Internet');
-    listB.loadDataURL(remoteFile);
-    trace('loading '+listB.dataURL+'…');
     
   }
   
