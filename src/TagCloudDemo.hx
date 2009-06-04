@@ -39,9 +39,11 @@ class TagCloudDemo extends Sprite{
       var tagcloud = new TagCloud(listA);
       tagcloud.x = 350;
       tagcloud.y = 30;
+      tagcloud.sizeFn = function(v:Float):Float{ return 15;};
       tagcloud.attachBehavior(new TextBlockBehavior(500, justify));
       tagcloud.attachBehavior(new AppearsGraduallyBehavior(50, random));
 //      tagcloud.attachBehavior(new MagnetsBehavior());
+      tagcloud.create();
       _root.addChild(tagcloud);
     }
     var onDeliciousFeedLoaded = function (evt:Event):Void{

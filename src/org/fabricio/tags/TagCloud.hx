@@ -116,8 +116,28 @@ class TagCloud extends Sprite{
     if ((_behaviorNames.length > 0) && (Lambda.has(_behaviorNames, behaviorName))){
       throw "Error: only one behavior of each type allowed."; return;
     }
-    behavior.init(_tags);
     _behaviors.push(behavior);
+  }
+
+  // === create() ===
+  // Generates all the tag objects of the cloud.
+  public function create():Void{
+    for (i in _tagList){
+      var tag = new Tag({
+        text  : applyCapitalization(i.name), 
+        size  : sizeFn(i.value), 
+        color : colorFn(i.value), 
+        font  : fontFn(i.value),
+        name  : i.name
+      });
+      tag.alpha = opacityFn(i.value);
+      _tags.push(tag);
+      addChild(tag);
+    }
+    for (i in _behaviors){
+      i.init(_tags);
+    }
+    addEventListener(flash.events.Event.ENTER_FRAME, step);
   }
   
   // == Constructor ==
@@ -135,28 +155,9 @@ class TagCloud extends Sprite{
     this.colorFn        = DEFAULT_COLOR_FN;
     this.opacityFn      = DEFAULT_OPACITY_FN;
     this.fontFn         = DEFAULT_FONT_FN;
-    init();
   }
 
   // == Private Helpers
-  
-  // === init() ===
-  // Generates all the tag objects of the cloud.
-  private function init():Void{
-    for (i in _tagList){
-      var tag = new Tag({
-        text  : applyCapitalization(i.name), 
-        size  : sizeFn(i.value), 
-        color : colorFn(i.value), 
-        font  : fontFn(i.value),
-        name  : i.name
-      });
-      tag.alpha = opacityFn(i.value);
-      _tags.push(tag);
-      addChild(tag);
-    }
-    addEventListener(flash.events.Event.ENTER_FRAME, step);
-  }
 
   private function step(e:Event){
     for (i in _behaviors){
