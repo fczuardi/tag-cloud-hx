@@ -67,6 +67,11 @@ class Tag extends Sprite{
   // === tagValue:Float ===
   // A numeric value for the tag.
   public var tagValue:Float;
+  
+  public var textHeight(getHeight, null):Float;
+  private function getHeight():Float{
+    return _label.textHeight;
+  }
 
   // === label:String ===
   // The displayed text of the tag.

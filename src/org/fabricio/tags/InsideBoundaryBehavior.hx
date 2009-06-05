@@ -1,23 +1,124 @@
-/*
+package org.fabricio.tags;
 
-  var localpoint:Point = new Point(_tags[i].x-incX, _tags[i].y-incY);
-  var globalpoint:Point = this.localToGlobal(localpoint);
-  var cornersOverShape = 0;
-  for (c in 0...5){
-    for(l in 0...3){
-      if (shape.hitTestPoint(globalpoint.x+(c*1/4)*_tags[i].width, globalpoint.y+(l*1/2)*_tags[i].height, true)) cornersOverShape++;
+import flash.display.MovieClip;
+import flash.geom.Point;
+
+// ==== package org.fabricio.tags ====
+
+class InsideBoundaryBehavior {
+  private var _next:Int;
+  
+  public function init(tags:Array<Tag>){
+    _tags = tags;
+    _next = 0;
+    for (i in _tags){
+      i.visible = false;
     }
+    _lastX = _lastY = 0;
   }
-  if (cornersOverShape < 7){
-    _tags[i].x -= Math.round(incX);
-    _tags[i].y -= Math.round(incY);
-  }else if (cornersOverShape < 9){
-    _tags[i].x += Math.round(incY/4);
-    _tags[i].y += Math.round(incX/4);
-  }else{
-    _tags[i].x = -100 + Math.round(Math.random()*300);
-    _tags[i].y = -20 + Math.round(Math.random()*40);
+  public function step(){
+    if (_next >= _tags.length) return;
+    var position:Point;
+    position = findAvailableSpot(_tags[_next]);
+    if (position != null){
+      _tags[_next].x = position.x;
+      _tags[_next].y = position.y;
+    }
+    _next++;
+        if (_next >= _tags.length) trace('done');
   }
-}
+  private function findAvailableSpot(tag):Point{
+    var overTag:Bool;
+    var overShape:Bool;
+    var x:Float = _lastX;
+    var y:Float = _lastY;
+    var firstScan:Bool = true;
+    while(true){
+      overTag = false;
+      overShape = (tagOverShapePercentage(tag, x, y, _shape) > 0.2);
+      if (!overShape){
+        for (i in _tags){
+          if (overTag = (tagOverTagPercentage(tag, x, y, i) > 0.05)) break;
+        }
+      }
+      if (overShape || overTag){
+        x += 5;
+        if (x + tag.width > _shape.x + _shape.width){
+          x = 0;
+          y += 5;
+        }
+        if (y + tag.height >= _shape.y + _shape.height) {
+          if(firstScan){
+            x = y = 0;
+            firstScan = false;
+          } else {
+            return null;
+          }
+        }
+      } else {
+        tag.visible = true;
+        _lastX = x;
+        _lastY = y;
+        return new Point(x,y);
+      }
+    }
+    return null;
+  }
+  private var _lastX:Float;
+  private var _lastY:Float;
+  private function tagOverTagPercentage(tagA:Tag, x:Float, y:Float, tagB:Dynamic):Float{
+    if ((tagA == tagB) ||
+        (tagB.visible == false) ||
+        (x > tagB.x+tagB.width) ||
+        (x+tagA.width < tagB.x) ||
+        (y > tagB.y+tagB.height) ||
+        (y+tagA.height < tagB.y) ||
+        (tagB.textHeight == Math.NaN)
+                ) return 0;
+    // divide the tag in a 5x3 grid and test all the 15 points against the shape
+    var columns = 7;
+    var rows = 5;
+    var topMarginA = (tagA.height - tagA.textHeight)/2;
+    var topMarginB = (tagB.height - tagB.textHeight)/2;
+    var pointsOverShape = 0;
+    for (c in 1...(columns-1)){
+      for(r in 1...(rows-1)){
+        var tx = x + (c / (columns)) * tagA.width;
+        var ty = y + topMarginA + (r / (rows)) * tagA.textHeight;
+        if ((tx > tagB.x) && (tx < tagB.x + tagB.width) && (ty > tagB.y) && (ty < tagB.y + tagB.height-5)) {
+          pointsOverShape++;
+        }
+      }
+    }
+    return pointsOverShape/((columns-2)*(rows-2));
+  }
 
-*/
+  private function tagOverShapePercentage(t:Tag, x:Float, y:Float, shape:Dynamic):Float{
+    // divide the tag in a 5x3 grid and test all the 15 points against the shape
+    var columns = 7;
+    var rows = 5;
+    var topMargin = (t.height - t.textHeight)/2;
+    var localpoint:Point = new Point(x, y+topMargin);
+    var globalpoint:Point = t.parent.localToGlobal(localpoint);
+    var pointsOverShape = 0;
+    for (c in 1...(columns-1)){
+      for(r in 1...(rows-1)){
+        if ( _shape.hitTestPoint(
+                            globalpoint.x + (c / (columns)) * t.width,
+                            globalpoint.y + (r / (rows)) * t.textHeight,
+                            true) ) {
+          pointsOverShape++;
+        }
+      }
+    }
+    return pointsOverShape/((columns-2)*(rows-2));
+  }
+  
+  public function new(shape){
+    _shape = shape;
+  }
+
+
+  private var _shape:MovieClip;
+  private var _tags:Array<Tag>;
+}

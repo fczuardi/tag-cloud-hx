@@ -4,6 +4,7 @@ import org.fabricio.tags.TagList;
 import org.fabricio.tags.MagnetsBehavior;
 import org.fabricio.tags.AppearsGraduallyBehavior;
 import org.fabricio.tags.TextBlockBehavior;
+import org.fabricio.tags.InsideBoundaryBehavior;
 import flash.events.Event;
 import flash.display.Sprite;
 import flash.display.Stage;
@@ -24,7 +25,7 @@ class TagCloudDemo extends Sprite{
     var remoteFile:String = "http://feeds.delicious.com/v2/json/tags/jampa?count=80";
     var listA:TagList     = new TagList();
     var listB:TagList     = new TagList();
-    var shape:Sprite;
+    var shape:MovieClip;
     // set alignment and scaling of the movie
     _stage.scaleMode = StageScaleMode.NO_SCALE;
     _stage.align = StageAlign.TOP_LEFT;
@@ -37,12 +38,13 @@ class TagCloudDemo extends Sprite{
     var onLocalFileLoaded = function (evt:Event):Void{
       trace('Local Data Sucessfully Loaded');
       var tagcloud = new TagCloud(listA);
-      tagcloud.x = 350;
-      tagcloud.y = 30;
+      tagcloud.x = 0;
+      tagcloud.y = 0;
       tagcloud.sizeFn = function(v:Float):Float{ return 15;};
-      tagcloud.attachBehavior(new TextBlockBehavior(500, justify));
-      tagcloud.attachBehavior(new AppearsGraduallyBehavior(50, random));
+//      tagcloud.attachBehavior(new TextBlockBehavior(500, justify));
+//      tagcloud.attachBehavior(new AppearsGraduallyBehavior(50, random));
 //      tagcloud.attachBehavior(new MagnetsBehavior());
+      tagcloud.attachBehavior(new InsideBoundaryBehavior(shape));
       tagcloud.create();
       _root.addChild(tagcloud);
     }
