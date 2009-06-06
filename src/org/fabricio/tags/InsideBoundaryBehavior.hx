@@ -7,14 +7,19 @@ import flash.geom.Point;
 
 class InsideBoundaryBehavior {
   private var _next:Int;
-  
+  private var _discardedTags:Array<String>;
+  public var finished:Bool;
   public function init(tags:Array<Tag>){
     _tags = tags;
     _next = 0;
     for (i in _tags){
       i.visible = false;
     }
-    _lastX = _lastY = 0;
+    _lastX = 0;
+    _lastY = 0;
+    _discardedTags = [];
+    _tags[0].parent.x = _shape.x;
+    _tags[0].parent.y = _shape.y;
   }
   public function step(){
     if (_next >= _tags.length) return;
@@ -23,9 +28,13 @@ class InsideBoundaryBehavior {
     if (position != null){
       _tags[_next].x = position.x;
       _tags[_next].y = position.y;
+    } else {
+      _discardedTags.push(_tags[_next].tagName);
     }
     _next++;
-        if (_next >= _tags.length) trace('done');
+    if (_next >= _tags.length) {
+      finished = true;
+    }
   }
   private function findAvailableSpot(tag):Point{
     var overTag:Bool;
@@ -43,13 +52,14 @@ class InsideBoundaryBehavior {
       }
       if (overShape || overTag){
         x += 5;
-        if (x + tag.width > _shape.x + _shape.width){
+        if (x + tag.width > _shape.width){
           x = 0;
           y += 5;
         }
-        if (y + tag.height >= _shape.y + _shape.height) {
+        if (y + tag.height >= _shape.height) {
           if(firstScan){
-            x = y = 0;
+            x = 0;
+            y = 0;
             firstScan = false;
           } else {
             return null;
@@ -106,7 +116,7 @@ class InsideBoundaryBehavior {
         if ( _shape.hitTestPoint(
                             globalpoint.x + (c / (columns)) * t.width,
                             globalpoint.y + (r / (rows)) * t.textHeight,
-                            true) ) {
+                            true) ||  (globalpoint.x > shape.x + shape.width)) {
           pointsOverShape++;
         }
       }
@@ -116,6 +126,7 @@ class InsideBoundaryBehavior {
   
   public function new(shape){
     _shape = shape;
+    finished = false;
   }
 
 

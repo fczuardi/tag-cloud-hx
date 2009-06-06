@@ -65,6 +65,15 @@ class TagList implements IEventDispatcher{
   public var dataURL:String;
     
 
+  public var higherValue(getHigherValue, null):Float;
+  private function getHigherValue():Float{
+    return _higherValue;
+  }
+  public var lowerValue(getLowerValue, null):Float;
+  private function getLowerValue():Float{
+    return _lowerValue;
+  }
+  
   // == Methods ==
   
   // === iterator() ===
@@ -95,8 +104,13 @@ class TagList implements IEventDispatcher{
     var json_ob = new JSONDecoder(_loader.data, true).getValue();
     _tagList = [];
     _tagHashTable = json_ob;
+    _lowerValue  = Math.POSITIVE_INFINITY;
+    _higherValue = Math.NEGATIVE_INFINITY;
     for(i in Reflect.fields(json_ob)){
-      _tagList.push({name:i,value:Reflect.field(json_ob,i)});
+      var v = Reflect.field(json_ob,i);
+      _lowerValue = Math.min(_lowerValue, v);
+      _higherValue = Math.max(_higherValue, v);
+      _tagList.push({name:i,value:v});
     }
     dispatchEvent(evt);
   }
@@ -164,6 +178,10 @@ class TagList implements IEventDispatcher{
 
   // The object containing tag names as keys and their values as values.
   private var _tagHashTable:Dynamic;
+  
+  // the maximum and minimum values used by tags from the loaded list
+  private var _lowerValue:Float;
+  private var _higherValue:Float;
   
 } // end of the class
 

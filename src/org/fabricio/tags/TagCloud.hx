@@ -49,12 +49,21 @@ class TagCloud extends Sprite{
   // == Defaults ==
   // The default values for various settings
   static inline var DEFAULT_CAPITALIZATION:Capitalization = upper;
-  static inline var DEFAULT_SIZE_FN:Float->Float    = function(v:Float):Float{ return  8 + v;}//15 + v * .02;}
-  static inline var DEFAULT_COLOR_FN:Float->Int     = function(v:Float):Int{ return 0x555555;}
-  static inline var DEFAULT_OPACITY_FN:Float->Float = function(v:Float):Float{ return .8;}//.2+v/180;}
-  static inline var DEFAULT_FONT_FN:Float->String   = function(v:Float):String{ return "DejaVuSansCondensedBold";}
+  static inline var DEFAULT_SIZE_FN:Float->Float->Float    = function(v:Float, r:Float):Float{ return 8 + 20 * r;}
+  static inline var DEFAULT_COLOR_FN:Float->Float->Int     = function(v:Float, r:Float):Int{ return 0x000000;}
+  static inline var DEFAULT_OPACITY_FN:Float->Float->Float = function(v:Float, r:Float):Float{ return .5 + .3 * r;}
+  static inline var DEFAULT_FONT_FN:Float->Float->String   = function(v:Float, r:Float):String{ return "DejaVuSansCondensedBold";}
 
   // == Properties ==
+  
+  public var list(getList, setList):TagList;
+  private function getList():TagList{
+    return _tagList;
+  }
+  private function setList(l:TagList):TagList{
+    _tagList = l;
+    return _tagList;
+  }
   
   // === capitalization:Capitalization ===
   // The text transformation to be applied on the tags of the cloud.
@@ -94,19 +103,26 @@ class TagCloud extends Sprite{
   
   // === sizeFn ===
   // A function to modify the size of each tag according to it’s value.
-  public var sizeFn:Float -> Float;
+  // The relative value of the tag is also passed as a second parameter.
+  // The relative value is a 0–1 float indicating the relative score of 
+  // that tag comparing to the other on the same cloud — 0 being the 
+  // lowest valued tag and 1 the highets.
+  public var sizeFn:Float -> Float -> Float;
 
   // === colorFn ===
   // A function to modify the color of each tag according to it’s value.
-  public var colorFn:Float -> Int;
+  // The relative value of the tag is also passed as a second parameter.
+  public var colorFn:Float -> Float -> Int;
   
   // === opacityFn ===
   // A function to modify the opacity of each tag according to it’s value.
-  public var opacityFn:Float -> Float;
+  // The relative value of the tag is also passed as a second parameter.
+  public var opacityFn:Float -> Float -> Float;
   
   // === fontFn ===
   // A function to modify the font of each tag according to it’s value.
-  public var fontFn:Float -> String;
+  // The relative value of the tag is also passed as a second parameter.
+  public var fontFn:Float -> Float -> String;
   
   // === attachBehavior(behavior:Dynamic) ===
   // Apply a behavior to the tag cloud. Multiple behaviors can be attached.
@@ -123,14 +139,15 @@ class TagCloud extends Sprite{
   // Generates all the tag objects of the cloud.
   public function create():Void{
     for (i in _tagList){
+      var relativeValue = 1 - (_tagList.higherValue - i.value) / (_tagList.higherValue - _tagList.lowerValue);
       var tag = new Tag({
         text  : applyCapitalization(i.name), 
-        size  : sizeFn(i.value), 
-        color : colorFn(i.value), 
-        font  : fontFn(i.value),
+        size  : sizeFn(i.value,relativeValue), 
+        color : colorFn(i.value,relativeValue), 
+        font  : fontFn(i.value,relativeValue),
         name  : i.name
       });
-      tag.alpha = opacityFn(i.value);
+      tag.alpha = opacityFn(i.value,relativeValue);
       _tags.push(tag);
       addChild(tag);
     }
@@ -160,8 +177,14 @@ class TagCloud extends Sprite{
   // == Private Helpers
 
   private function step(e:Event){
+    var allFinished = true;
     for (i in _behaviors){
       i.step();
+      if(i.finished != true) allFinished = false;
+    }
+    if (allFinished) {
+//      trace('finished.');
+      removeEventListener(flash.events.Event.ENTER_FRAME, step);
     }
   }
   
