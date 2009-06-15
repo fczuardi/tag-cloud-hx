@@ -47,7 +47,7 @@ class InsideBoundaryBehavior {
       overShape = (tagOverShapePercentage(tag, x, y, _shape) > 0.2);
       if (!overShape){
         for (i in _tags){
-          if (overTag = (tagOverTagPercentage(tag, x, y, i) > 0.05)) break;
+          if (overTag = (tagOverTagPercentage(tag, x, y, i) > 0.01)) break;
         }
       }
       if (overShape || overTag){
