@@ -99,8 +99,23 @@ class TagList implements IEventDispatcher{
     return requestURL(url, listeners);
   }
   
+  public function loadJSON(s:String){
+    var json_ob = new JSONDecoder(s, true).getValue();
+    _tagList = [];
+    _tagHashTable = json_ob;
+    _lowerValue  = Math.POSITIVE_INFINITY;
+    _higherValue = Math.NEGATIVE_INFINITY;
+    for(i in Reflect.fields(json_ob)){
+      var v = Reflect.field(json_ob,i);
+      _lowerValue = Math.min(_lowerValue, v);
+      _higherValue = Math.max(_higherValue, v);
+      _tagList.push({name:i,value:v});
+    }
+  }
   // onComplete callback for loadDataURL
   private function JSONLoadComplete(evt:Event):Void{
+    loadJSON(_loader.data);
+    /*
     var json_ob = new JSONDecoder(_loader.data, true).getValue();
     _tagList = [];
     _tagHashTable = json_ob;
@@ -112,6 +127,7 @@ class TagList implements IEventDispatcher{
       _higherValue = Math.max(_higherValue, v);
       _tagList.push({name:i,value:v});
     }
+    */
     dispatchEvent(evt);
   }
 
