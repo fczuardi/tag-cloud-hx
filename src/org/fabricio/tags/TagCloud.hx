@@ -183,8 +183,8 @@ class TagCloud extends Sprite{
       if(i.finished != true) allFinished = false;
     }
     if (allFinished) {
-//      trace('finished.');
       removeEventListener(flash.events.Event.ENTER_FRAME, step);
+      dispatchEvent(new Event(Event.COMPLETE));
     }
   }
   

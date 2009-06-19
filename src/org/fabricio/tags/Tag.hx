@@ -174,6 +174,7 @@ class Tag extends Sprite{
     _label.autoSize   = TextFieldAutoSize.LEFT;
     _label.embedFonts = DEFAULT_EMBED_FONT;
     _label.selectable = DEFAULT_SELECTABLE;
+    _format.bold = (Math.random() > .2);
 //    _label.border = true;
     var text:String   = null;
     if (Reflect.isObject(text_or_config)){
